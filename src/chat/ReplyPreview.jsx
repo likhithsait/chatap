@@ -1,13 +1,18 @@
-export default function ReplyPreview({ replyTo, clear }) {
+export default function ReplyPreview({ replyTo, clear, onJump }) {
   return (
-    <div className="bg-neutral-900 border-l-4 border-blue-500 p-2 mx-3 mb-1 rounded">
-      <div className="text-xs opacity-70">Replying to:</div>
-      <div className="text-sm">{replyTo.text}</div>
-      <button
-        className="text-red-400 text-xs mt-1"
-        onClick={clear}
+    <div className="px-3 py-2 bg-neutral-800 border-l-4 border-neutral-500 flex justify-between items-center">
+      <div
+        onClick={onJump}
+        className="cursor-pointer text-sm opacity-80 hover:opacity-100 "
       >
-        Cancel
+        Replying to: {replyTo.text}
+      </div>
+
+      <button
+        onClick={clear}
+        className="text-xs opacity-60 hover:opacity-100"
+      >
+        ✕
       </button>
     </div>
   );
