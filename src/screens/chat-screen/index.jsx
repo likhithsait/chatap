@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChatPane from "../chat/ChatPane";
+import ChatPane from "../../components/chat-pane";
 
 export default function ChatScreen({ usernames }) {
   const [messages, setMessages] = useState([]);

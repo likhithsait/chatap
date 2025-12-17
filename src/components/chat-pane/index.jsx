@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import MessageBubble from "./MessageBubble";
-import ReplyPreview from "./ReplyPreview";
+import MessageBubble from "../message-bubble";
+import ReplyPreview from "../reply-preview";
 
 export default function ChatPane({
   user,
@@ -148,20 +148,20 @@ export default function ChatPane({
   <div className="relative " >
   <button 
       onMouseEnter={() => setHover(true)}
-    className="px-3 py-2 rounded bg-neutral-700 hover:bg-neutral-600 cursor-pointer"
+    className="px-3 py-2 rounded bg-neutral-700 hover:bg-blue-400 active:scale-105 cursor-pointer"
   >
     +
   </button>
 
   {hover  && (
     <div className="absolute bottom-full mb-2 mr-6 left-0
-                    bg-neutral-800 rounded shadow p-2">
+                    bg-neutral-800 rounded shadow p-2 hover:bg-blue-400 cursor-pointer">
       <label className="cursor-pointer text-sm">
         📷 
         <input
           type="file"
           accept="image/*"
-          hidden
+          hidden 
           onChange={handleImageUpload}
         />
       </label>

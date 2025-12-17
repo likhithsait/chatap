@@ -1,7 +1,7 @@
 import { useState } from "react";
-import StartScreen from "./screens/StartScreen.jsx";
-import UsernameScreen from "./screens/UsernameScreen.jsx";
-import ChatScreen from "./screens/ChatScreen.jsx";
+import StartScreen from "./screens/start-screen";
+import UsernameScreen from "./screens/username-screen";
+import ChatScreen from "./screens/chat-screen";
 
 export default function App() {
   const [stage, setStage] = useState("start"); // start → username → chat

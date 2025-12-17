@@ -8,7 +8,7 @@ export default function UsernameScreen({ usernames, setUsernames, next }) {
     return;}
 
   if (hasNumber(u1) || hasNumber(u2)){
-    alert("please enter username without a number")
+    alert("please remove any special characters(!@#$..) and numbers from username")
     return;
   }
 
@@ -20,7 +20,8 @@ export default function UsernameScreen({ usernames, setUsernames, next }) {
   }
 
   function hasNumber(str) {
-  return [...str].some(ch => ch >= "0" && ch <= "9");
+   return /[^a-zA-Z ]/.test(str);
+
 }
 
 
