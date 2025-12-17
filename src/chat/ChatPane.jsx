@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import MessageBubble from "./MessageBubble";
 import ReplyPreview from "./ReplyPreview";
 
@@ -14,15 +14,37 @@ export default function ChatPane({
   deleteForMe,
   deleteForEveryone
 }) {
+  
   const inputRef = useRef(null);
   const messageRefs = useRef({});
+
+  const [showTools, setShowTools] = useState(false);
+  const [image, setImage] = useState(null);
+  const [hover, setHover] = useState(false);
+
+  function handleImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    setImage(reader.result); 
+    setShowTools(false);
+  };
+  reader.readAsDataURL(file);
+}
+
+
 
   useEffect(() => {
     if (replyTo) inputRef.current?.focus();
   }, [replyTo]);
 
   function keyHandler(e) {
-    if (e.key === "Enter") send();
+    if (e.key === "Enter"){
+          send(image);
+        setImage(null);
+    }
   }
 
   function scrollToMessage(id) {
@@ -80,19 +102,42 @@ export default function ChatPane({
       )}
 
       <div className="p-3 bg-neutral-900 flex gap-2 relative
-      ">
+      " 
+        onMouseLeave={() => setHover(false)}>
+          {image && (
+  <div className="px-3 py-2 bg-neutral-900 flex items-center gap-3">
+    <img
+      src={image}
+      alt="preview"
+      className="h-16 w-16 object-cover rounded"
+    />
+    <button
+      onClick={() => setImage(null)}
+      className="ml-auto text-neutral-400 hover:text-white text-lg cursor-pointer">
+      Cancel
+    </button>
+  </div>
+)}
+
         <input
           ref={inputRef}
           className="flex-1 px-3 py-2 bg-black rounded"
-          placeholder="Type a message"
+          placeholder={
+                        image
+                        ? "Press send to send image"
+                        : "Type a message"
+                     }
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={keyHandler}
         />
 
         <button
-          onClick={send}
-          className={`px-4 py-2 rounded
+         onClick={() => {
+         send(image);
+         setImage(null);
+         }}
+          className={`px-4 py-2 rounded 
             transition-all duration-200 cursor-pointer
             hover:bg-blue-400 active:scale-105
             ${input.trim() ? "bg-blue-400" : "bg-neutral-700"}
@@ -100,6 +145,29 @@ export default function ChatPane({
         >
            ᯓ➤
         </button>
+  <div className="relative " >
+  <button 
+      onMouseEnter={() => setHover(true)}
+    className="px-3 py-2 rounded bg-neutral-700 hover:bg-neutral-600 cursor-pointer"
+  >
+    +
+  </button>
+
+  {hover  && (
+    <div className="absolute bottom-full mb-2 mr-6 left-0
+                    bg-neutral-800 rounded shadow p-2">
+      <label className="cursor-pointer text-sm">
+        📷 
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={handleImageUpload}
+        />
+      </label>
+    </div>
+  )}
+</div>
       </div>
     </div>
   );

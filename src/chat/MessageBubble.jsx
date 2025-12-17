@@ -18,7 +18,7 @@ if (msg.deletedGlobally) {
     <div className={`flex ${mine ? "justify-end" : "justify-start"} my-1`}>
       <div
         className={`inline-block px-3 py-2 rounded-xl shadow text-white  ${
-          mine ? "bg-blue-500" : "bg-stone-700"
+          mine ? "bg-blue-950" : "bg-stone-700"
         }`}
       >
         ⊘ This message was deleted
@@ -34,22 +34,30 @@ if (msg.deletedGlobally) {
     >
       <div className="relative max-w-sm ">
         <div
-          onMouseEnter={() => setHover(true)}
-          className={`px-3 py-2 rounded-xl shadow text-white  wrap-break-word
-                       ${
-            mine ? "bg-blue-900" : "bg-stone-800"
-          }`}
-        >
-          {msg.replyTo && (
-            <div
-              onClick={() => onJumpToMessage(msg.replyTo.id)}
-              className="text-xs bg-black/30 p-1 rounded mb-1 cursor-pointer"
-            >
-              {msg.replyTo.text}
-            </div>
-          )}
-          {msg.text}
-        </div>
+  onMouseEnter={() => setHover(true)}
+  className={`px-3 py-2 rounded-xl shadow text-white break-words
+               ${mine ? "bg-blue-950" : "bg-stone-800"}`}
+>
+  {msg.replyTo && (
+    <div
+      onClick={() => onJumpToMessage(msg.replyTo.id)}
+      className="text-xs bg-black/30 p-1 rounded mb-1 cursor-pointer"
+    >
+      {msg.replyTo.text}
+    </div>
+  )}
+
+  {msg.image && (
+    <img
+      src={msg.image}
+      alt="uploaded"
+      className="mb-2 max-w-xs rounded-lg"
+    />
+  )}
+
+  {msg.text}
+</div>
+
 
         {hover && (
           <div
